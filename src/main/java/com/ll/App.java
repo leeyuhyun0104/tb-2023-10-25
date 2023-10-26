@@ -13,11 +13,15 @@ class App {
             String cmd = scanner.nextLine();
 
             if(cmd.equals("종료")){
-                System.out.println("종료합니다.");
                 break;
             }
+            else if (cmd.equals("등록")) {
+                System.out.print("명언 : ");
+                String content= scanner.nextLine();
 
-            System.out.printf("입력하신 명령 : %s\n", cmd);
+                System.out.print("작가 : ");
+                String author= scanner.nextLine();
+            }
         }
     }
 }
