@@ -11,8 +11,8 @@ public class Quotation {
         this.author = author;
     }
 
-    @Override
+/*    @Override
     public String toString() {
         return id + " / " + content +" / " + author;
-   }
+   }*/
 }
