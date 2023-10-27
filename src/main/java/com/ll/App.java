@@ -67,11 +67,26 @@ class App {
     }
 
     void actionRemove(String cmd) {
-        int start = "삭제?id=".length();
-        int removeId = Integer.parseInt(cmd.substring(start));
-        if (removeId >= 1 && removeId <= quotationList.size()) {
-            quotationList.remove(removeId - 1);
-            System.out.printf("%d번 명언이 삭제되었습니다.\n", removeId);
+        try {
+            int start = "삭제?id=".length();
+            int removeId = Integer.parseInt(cmd.substring(start));
+            if (removeId >= 1 && removeId <= quotationList.size()) {
+                quotationList.remove(removeId - 1);
+
+                for (int i = 0; i < quotationList.size(); i++) {
+                    quotationList.get(i).id = i + 1;
+                }
+                System.out.printf("%d번 명언이 삭제되었습니다.\n", removeId);
+            }
+            else{
+                System.out.println("존재하지않는 명언입니다.");
+            }
+        }
+        catch (NumberFormatException e) {
+            System.out.println("올바른 명령 형식이 아닙니다.");
+        }
+        catch (IndexOutOfBoundsException e) {
+            System.out.println("유효하지 않은 명언 번호입니다.");
         }
     }
 
