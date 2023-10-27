@@ -7,61 +7,73 @@ import java.util.Scanner;
 class App {
     int quotationId = 0;
     List<Quotation> quotationList = new ArrayList<>();
+
     void run() {
         System.out.println("== 명언 앱 ==");
         List<Quotation> quotationList = new ArrayList<>();
 
-        while(true) {
+        while (true) {
             System.out.print("명령) ");
 
             Scanner scanner = new Scanner(System.in);
             String cmd = scanner.nextLine();
 
-            if(cmd.equals("종료")){
+            if (cmd.equals("종료")) {
                 break;
-            }
-            else if (cmd.equals("등록")) {
+            } else if (cmd.equals("등록")) {
                 actionWrite();
-            }
-            else if (cmd.equals("목록")) {
+            } else if (cmd.equals("목록")) {
                 actionList();
-                }
+            } else if (cmd.startsWith("삭제?id=")) {
+                actionRemove(cmd);
             }
         }
-
-        void actionWrite(){
-
-            System.out.print("명언 : ");
-            Scanner scanner = new Scanner(System.in);
-            String content= scanner.nextLine();
-
-            System.out.print("작가 : ");
-            String author= scanner.nextLine();
-
-            quotationId++;
-            int id = quotationId;
-
-            Quotation q = new Quotation(id, content, author);
-            quotationList.add(q);
-
-            System.out.printf("%d번 명언이 등록되었습니다.\n", quotationId);
-        }
-        void actionList(){
-
-            if(quotationList.isEmpty())
-                System.out.println("등록된 명언이 없습니다.");
-
-            else {
-                System.out.println("번호 / 작가 / 명언");
-                System.out.println("-----------------------");
-
-                for(int i = quotationList.size()-1; i>=0; i--){
-                    /*System.out.println(quotationList.get(i));*/
-                    Quotation q = quotationList.get(i);
-                    System.out.printf("%d / %s / %s\n", q.id, q.content, q.author);
-                }
-            }
-
-
     }
+//========================================================================
+
+    void actionWrite() {
+
+        System.out.print("명언 : ");
+        Scanner scanner = new Scanner(System.in);
+        String content = scanner.nextLine();
+
+        System.out.print("작가 : ");
+        String author = scanner.nextLine();
+
+        quotationId++;
+        int id = quotationId;
+
+        Quotation q = new Quotation(id, content, author);
+        quotationList.add(q);
+
+        System.out.printf("%d번 명언이 등록되었습니다.\n", quotationId);
+    }
+
+    void actionList() {
+
+        if (quotationList.isEmpty())
+            System.out.println("등록된 명언이 없습니다.");
+
+        else {
+            System.out.println("번호 / 명언 / 작가");
+            System.out.println("-----------------------");
+
+            for (int i = quotationList.size() - 1; i >= 0; i--) {
+                /*System.out.println(quotationList.get(i));*/
+                Quotation q = quotationList.get(i);
+                System.out.printf("%d / %s / %s\n", q.id, q.content, q.author);
+            }
+        }
+    }
+
+    void actionRemove(String cmd) {
+        int start = "삭제?id=".length();
+        int removeId = Integer.parseInt(cmd.substring(start));
+        if (removeId >= 1 && removeId <= quotationList.size()) {
+            quotationList.remove(removeId - 1);
+            System.out.printf("%d번 명언이 삭제되었습니다.\n", removeId);
+        }
+    }
+
 }
+
