@@ -26,6 +26,8 @@ class App {
                 actionList();
             } else if (cmd.startsWith("삭제?id=")) {
                 actionRemove(cmd);
+            } else if (cmd.startsWith("수정?id=")){
+                actionModify(cmd);
             }
         }
     }
@@ -87,6 +89,32 @@ class App {
         }
         catch (IndexOutOfBoundsException e) {
             System.out.println("유효하지 않은 명언 번호입니다.");
+        }
+    }
+
+    void actionModify(String cmd){
+        int start = "수정?id=".length();
+        int modifyId = Integer.parseInt(cmd.substring(start));
+
+        if (modifyId >= 1 && modifyId <= quotationList.size()) {
+            Quotation q = quotationList.get(modifyId-1);
+            System.out.printf("명언(기존): %s\n", q.content);
+
+            System.out.print("명언: ");
+            Scanner scanner = new Scanner(System.in);
+            String newContent = scanner.nextLine();
+            q.content = newContent;
+
+            System.out.printf("작가(기존): %s\n", q.author);
+
+            System.out.print("작가: ");
+            String newAuthor = scanner.nextLine();
+            q.author = newAuthor;
+
+            System.out.println("명언이 수정되었습니다.");
+        }
+        else{
+            System.out.println("존재하지않는 명언입니다.");
         }
     }
 
